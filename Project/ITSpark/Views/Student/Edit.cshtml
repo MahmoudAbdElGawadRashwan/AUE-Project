@@ -1,0 +1,81 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@model Students
+
+@{
+    ViewData["Title"] = @Localizer["Edit"];
+}
+
+<h1 class="text-info h1">@Localizer["Edit"]</h1>
+
+@using (Html.BeginForm("Edit", "Student", FormMethod.Post, new { enctype = "multipart/form-data" ,@class = "form-inline bg-success bg-gradient p-3 rounded" }))
+{
+    <div class="form-group">
+        <label class="h5">@Localizer["Name"]</label>
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+    <br />
+    <div class="form-group">
+        <label class="h5">@Localizer["Gender"]</label>
+        <div class="form-check">
+            <label class="form-check-label">
+                @Html.RadioButtonFor(model => model.Gender, "Male", new { @class = "form-check-input" }) @Localizer["Male"]
+            </label>
+        </div>
+        <div class="form-check">
+            <label class="form-check-label">
+                @Html.RadioButtonFor(model => model.Gender, "Female", new { @class = "form-check-input" }) @Localizer["Female"]
+            </label>
+        </div>
+        @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+    </div>
+
+    <br>
+
+    <div class="form-group">
+        <label class="h5">@Localizer["City"]</label>
+        @Html.DropDownListFor(model => model.City, new SelectList(GetEgyptianCities(), "Value", "Text"), "Select City :", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+    </div>
+
+    <br>
+    <div class="form-group">
+        <label class="h5">@Localizer["Date of Birth"]</label>
+        @Html.TextBoxFor(model => model.DateOfBirth, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+    </div>
+
+    <br>
+
+    <div class="form-group">
+        <label class="h5">@Localizer["IsEnrolled"]</label>
+        <div class="form-check">
+            <label class="form-check-label">
+                @Html.RadioButtonFor(model => model.IsEnrolled, true, new { @class = "form-check-input" }) @Localizer["Yes"]
+            </label>
+        </div>
+        <div class="form-check">    
+            <label class="form-check-label">
+                @Html.RadioButtonFor(model => model.IsEnrolled, false, new { @class = "form-check-input" }) @Localizer["No"]
+            </label>
+        </div>
+        @Html.ValidationMessageFor(model => model.IsEnrolled, "", new { @class = "text-danger" })
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
+    <a asp-action="Index" class="btn btn-info">@Localizer["Back to List"]</a>
+}
+
+@functions {
+    public List<SelectListItem> GetEgyptianCities()
+    {
+        return new List<SelectListItem>
+        {
+            new SelectListItem { Value = "Cairo", Text = "Cairo" },
+            new SelectListItem { Value = "Alexandria", Text = "Alexandria" },
+            // Add more cities as needed
+        };
+    }
+}

@@ -1,0 +1,144 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using System.Globalization
+
+
+@model IEnumerable<ITSpark.Models.Students>
+
+@{
+    ViewData["Title"] = @Localizer["Welcome to"];
+}
+
+<h1 class="d-flex justify-content-center" style="color:#7B68EE;">@Localizer["Welcome to the American University (AUE)"]</h1>
+<br />
+
+<p>
+    <a asp-action="Create" class="btn btn-success">@Localizer["Create New"]</a>
+</p>
+
+@using (Html.BeginForm("Index", "Student", FormMethod.Get, new { @class = "form-inline bg-info p-4 rounded" }))
+{
+    <div class="form-group">
+        <label for="nameSearch" class="h5">@Localizer["Name"]</label>
+        <input type="text" name="nameSearch" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="genderSearch" class="h5">@Localizer["Gender"]</label>
+        <div class="form-check-label">
+            <input type="radio" name="genderSearch" value="Male" class="form-check-input" />
+            <label class="form-check-label">@Localizer["Male"]</label>
+        </div>
+        <div class="form-check-label">
+            <input type="radio" name="genderSearch" value="Female" class="form-check-input" />
+            <label class="form-check-label">@Localizer["Female"]</label>
+        </div>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="citySearch" class="h5">@Localizer["City"]</label>
+        <select name="citySearch" class="form-control">
+            <option value="">@Localizer["Select City"] : </option>
+            <option value="Cairo">@Localizer["Cairo"]</option>
+            <option value="Alexandria">@Localizer["Alexandria"]</option>
+            <!-- Add more cities as needed      Test -->
+        </select>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="dateOfBirthFrom" class="h5">@Localizer["Date of Birth"]</label>
+        <input type="date" name="dateOfBirthFrom" class="form-control" />
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="dateOfBirthTo" class="h5">@Localizer["To"]</label>
+        <input type="date" name="dateOfBirthTo" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">@Localizer["Search"]</button>
+}
+<br>
+
+
+
+<table class="table table-bordered table-hover table-success table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Localizer["Name"]
+            </th>
+            <th>
+                @Localizer["Gender"]
+            </th>
+            <th>
+                @Localizer["City"]
+            </th>
+            <th>
+                @Localizer["Date of Birth"]
+            </th>
+            <th>
+                @Localizer["IsEnrolled"]
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @item.DateOfBirth.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsEnrolled)
+                </td>
+                <td>
+
+
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-dark">@Localizer["Edit"]</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">@Localizer["Details"]</a>
+        <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Are you sure you want to delete student ' + '@item.Name' + ' ?');" class="d-inline">
+    <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-danger">@Localizer["Delete"]</button>
+
+</form>
+
+
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<!-- Pagination -->
+
+@{
+    int totalPages = (int)ViewData["TotalPages"];
+    int currentPage = (int)ViewData["CurrentPage"];
+}
+
+
+<div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
+

@@ -1,0 +1,60 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using System.Globalization
+
+
+@model ITSpark.Models.Students
+
+@{
+    ViewData["Title"] = @Localizer["Details"];
+}
+
+<h1 class="text-danger">@Localizer["Details"]</h1>
+
+<div class="form-inline bg-secondary  p-4 rounded">
+    <h4>@Localizer["Student"]</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            <label class="h5">@Localizer["Name"]</label>
+
+        </dt>
+        <dd class="col-sm-10" style="width: 80%;">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            <label class="h5">@Localizer["Gender"]</label>
+
+        </dt>
+        <dd class="col-sm-10" style="width: 80%;">
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        <dt class = "col-sm-2">
+            <label class ="h5">@Localizer["City"]</label>
+
+        </dt>
+        <dd class="col-sm-10" style="width: 80%;">
+            @Html.DisplayFor(model => model.City)
+        </dd>
+        <dt class = "col-sm-2">
+            <labelclass ="h5">@Localizer["Date of Birth"]</labelclass>
+
+        </dt>
+        <dd class="col-sm-10" style="width: 80%;">
+            @Model.DateOfBirth.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+        </dd>
+
+        <dt class = "col-sm-2">
+            <label class="h5">@Localizer["IsEnrolled"]</label>
+
+        </dt>
+        <dd class="col-sm-10" style="width: 80%;">
+            @Html.DisplayFor(model => model.IsEnrolled)
+        </dd>
+    </dl>
+</div>
+<br />
+<div>
+    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model?.Id">@Localizer["Edit"]</a>
+    <a asp-action="Index" class="btn btn-success">@Localizer["Back to List"]</a>
+</div>

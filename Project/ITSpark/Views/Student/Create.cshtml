@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@model Students
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = @Localizer["Create New Student"];
+}
+
+<h1 class="text-danger">@Localizer["Create New Student"]</h1>
+
+<form method="post" class="form-inline p-4 rounded" style="background-color:#B0C4DE">
+        
+    
+    <div class="form-group">
+
+        <label asp-for="Name" class="h5">@Localizer["Name"]</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    
+    <br />
+    
+<div class="form-group">
+        <label asp-for="Gender" class="h5">@Localizer["Gender"]</label>
+    <select asp-for="Gender" class="form-control">
+            <option value="">@Localizer["Select Gender"] :</option>
+            <option value="Male">@Localizer["Male"]</option>
+            <option value="Female">@Localizer["Female"]</option>
+    </select>
+    <span asp-validation-for="Gender" class="text-danger"></span>
+</div>
+
+ <br />
+
+<div class="form-group">
+        <label asp-for="City" class="h5">@Localizer["City"]</label>
+    <select asp-for="City" class="form-control">
+            <option value="">@Localizer["Select City"] :</option>
+            <option value="Cairo">@Localizer["Cairo"]</option>
+            <option value="Alexandria">@Localizer["Alexandria"]</option>
+            <!-- Add more cities as needed -->
+        </select>
+    <span asp-validation-for="City" class="text-danger"></span>
+</div>
+    
+
+    <br />
+
+<div class="form-group">
+        <label asp-for="IsEnrolled" class="h5">@Localizer["IsEnrolled"]</label>
+    <div class="form-check">
+        <input type="radio" id="isEnrolledYes" asp-for="IsEnrolled" value="true" class="form-check-input" />
+            <label for="isEnrolledYes" class="form-check-label">@Localizer["Yes"]</label>
+    </div>
+    <div class="form-check">
+        <input type="radio" id="isEnrolledNo" asp-for="IsEnrolled" value="false" class="form-check-input" />
+            <label for="isEnrolledNo" class="form-check-label">@Localizer["No"]</label>
+    </div>
+    <span asp-validation-for="IsEnrolled" class="text-danger"></span>
+</div>
+
+
+    <br />
+
+    <div class="form-group">
+        <label asp-for="DateOfBirth" class="h5">@Localizer["Date of Birth"]</label>
+        <input asp-for="DateOfBirth" class="form-control" type="date" />
+        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+    </div>
+
+
+
+    <br />
+    
+    <button type="submit" class="btn btn-danger">@Localizer["Create"]</button>
+    <a asp-action="Index" class="btn btn-light">@Localizer["Back to List"]</a>
+
+</form>
+
+    @section scripts {
+   <partial name="_ValidationScriptsPartial" />
+     }
+
